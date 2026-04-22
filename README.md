@@ -17,6 +17,9 @@ This repository provides a systematic comparison of four learning rules — Back
 - **FA actively degrades** representations below the random baseline at V1 (d = 1.1)
 
 ---
+## Paper
+
+📄 **[arXiv:2604.16875](https://arxiv.org/abs/2604.16875)** — *Untrained CNNs Match Backpropagation at V1: A Systematic RSA Comparison of Four Learning Rules Against Human fMRI*
 
 ## Setup
 
