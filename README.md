@@ -1,61 +1,81 @@
-# Learning Rules RSA: Comparing Backpropagation, Feedback Alignment, Predictive Coding, and STDP Against Human fMRI
+# Untrained CNNs Match Backpropagation at V1
 
-Code and results for the paper:
+Code, figures, and results for the paper **"Untrained CNNs Match Backpropagation at V1: A Systematic RSA Comparison of Four Learning Rules Against Human fMRI"**.
 
-> **Untrained CNNs Match Backpropagation at V1: A Systematic RSA Comparison of Four Learning Rules Against Human fMRI**  
-> Nils Leutenegger, Independent Researcher, Switzerland  
----
+[
+[
+[
+[
+
+> This repository tracks the **latest** project state and currently corresponds to **arXiv v2**. Earlier repository states should be preserved via Git tags or GitHub releases, since releases are the standard mechanism for distributing stable project snapshots on GitHub.[1][2]
 
 ## Overview
 
-This repository provides a systematic comparison of four learning rules — Backpropagation (BP), Feedback Alignment (FA), Predictive Coding (PC), and Spike-Timing-Dependent Plasticity (STDP) — applied to identical CNN architectures and evaluated against human fMRI data from the [THINGS-fMRI dataset](https://osf.io/jum2f/) using Representational Similarity Analysis (RSA).
+This repository accompanies a study of whether the learning rule used to train a neural network determines how well its internal representations align with the human visual cortex. The paper compares backpropagation (BP), feedback alignment (FA), predictive coding (PC), spike-timing-dependent plasticity (STDP), and an untrained random-weights baseline using representational similarity analysis (RSA) against THINGS-fMRI.
 
-**Key findings:**
-- V1/V2 alignment is primarily **architecture-driven**: an untrained CNN (ρ = 0.071) is statistically indistinguishable from BP (ρ = 0.072, p = 0.43)
-- Learning rules only differentiate at **higher visual areas** (LOC/IT): BP dominates (ρ = 0.018–0.020, d > 2.3 vs. random)
-- **PC matches BP at IT** (ρ = 0.017 vs. 0.020, p = 0.18) using only local Hebbian updates
-- **FA actively degrades** representations below the random baseline at V1 (d = 1.1)
+## Main result
 
----
-## Paper
+The central result is that early visual alignment is driven primarily by **architecture** rather than the specific learning rule. In V1 and V2, the untrained CNN exceeds backpropagation, while only at LOC does BP show a reliable advantage over the random baseline.
 
-📄 **[arXiv:2604.16875](https://arxiv.org/abs/2604.16875)** — *Untrained CNNs Match Backpropagation at V1: A Systematic RSA Comparison of Four Learning Rules Against Human fMRI*
+## Key findings
 
-## Setup
+- Random weights exceed BP at V1: rho = 0.076 vs. 0.034.
+- STDP achieves the highest V1 alignment among trained rules: rho = 0.064.
+- BP is the only condition that reliably exceeds the random baseline at LOC.
+- At IT, all five conditions converge and no trained-rule comparison survives FDR correction.
+- Partial RSA preserves the main ordering after controlling for pixel similarity.
 
-```bash
-git clone https://github.com/nilsleut/learning-rules-rsa
-cd learning-rules-rsa
-pip install -r requirements.txt
+## Repository structure
+
+```text
+figures/     Final manuscript figures corresponding to arXiv v2
+paper/       Paper source files and compiled manuscript
+programs/    Training, RSA, statistics, and plotting code
+results/     Processed outputs, summary tables, and saved results
 ```
 
-**Requirements:** Python 3.11, PyTorch, snnTorch, scipy, numpy, pandas, matplotlib, scikit-learn
 
----
 
-## Data
+A practical release layout is:
 
-This project uses the [THINGS-fMRI dataset](https://osf.io/jum2f/) (Gifford & Cichy, 2022). Download the fMRI RDMs for subjects 1–3 (V1, V2, LOC, IT) and place them in `data/things_fmri/`.
+- `v1` — repository state corresponding to the first arXiv submission.[2]
+- `v2` — repository state corresponding to the revised arXiv version now online.[2]
+- `main` — actively maintained latest project state.[1]
 
-CIFAR-10 is loaded automatically via `torchvision`.
+## Reproducibility
 
----
+This repository contains the code, figures, and processed results used for the current manuscript version. Full end-to-end reproduction may require external datasets, computational resources, and local environment configuration beyond what is redistributed here, which is normal for research repositories handling external benchmark data.[3][4]
 
----
+A good reproduction workflow is:
 
-## Main Results
+1. Set up the Python environment and dependencies.
+2. Place required datasets into the expected directory structure.
+3. Run the training and feature-extraction scripts in `programs/`.
+4. Regenerate result tables in `results/`.
+5. Regenerate final manuscript figures in `figures/`.
+6. Verify that the outputs match the current arXiv v2 manuscript.
 
-| ROI | Layer | Random | BP | FA | PC | STDP |
-|-----|-------|--------|----|----|----|----|
-| V1  | Conv1 | 0.071 | **0.072** | 0.030 | 0.057 | **0.079** |
-| V2  | Conv1 | 0.039 | **0.050** | 0.014 | 0.030 | 0.046 |
-| LOC | Conv3 | −0.004 | **0.018** | 0.004 | 0.005 | 0.002 |
-| IT  | FC1   | 0.004 | **0.020** | 0.008 | 0.017 | 0.009 |
+## Recommended maintenance after v2
 
-Spearman ρ (model–brain alignment). Bold = best per ROI. Full statistics in `results/`.
+Now that the repository files have been updated from v1 to v2, the most important maintenance step is consistency.[5][3] The figures, programs, paper files, and results should all describe the **same** scientific state, and the README should explicitly state that the repository corresponds to arXiv v2 so visitors do not confuse it with the earlier version.[5][3]
 
----
+A concise repository note can therefore be kept near the top:
 
-## Acknowledgements
+> This repository currently corresponds to the revised arXiv v2 version of the paper. For the original repository state associated with the first submission, see the `v1` release.
 
-Thanks to the creators of the THINGS-fMRI dataset for making their data publicly available, and to the Brain-Score team for their evaluation infrastructure.
+## Citation
+
+If this repository is useful in your work, cite the paper as:
+
+```bibtex
+@article{leutenegger2026untrained,
+  title={Untrained CNNs Match Backpropagation at V1: A Systematic RSA Comparison of Four Learning Rules Against Human fMRI},
+  author={Leutenegger, Nils},
+  journal={arXiv preprint arXiv:2604.16875},
+  year={2026}
+}
+```
+
+## License
+
+Add a repository license file if not already present. GitHub recommends explicit repository metadata such as licensing because it improves clarity for users and reusers of the codebase.[5]
